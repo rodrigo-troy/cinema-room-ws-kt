@@ -1,0 +1,5 @@
+# Project exclude paths
+/.gradle/
+/Cinema Room REST Service (Kotlin)/task/build/
+/Cinema Room REST Service (Kotlin)/task/out/
+/Cinema Room REST Service (Kotlin)/task/out/production/classes/
