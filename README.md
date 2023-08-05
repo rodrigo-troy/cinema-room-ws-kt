@@ -19,3 +19,7 @@ A simple RESTful service built with Kotlin and Spring Boot that provides informa
 1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/cinema-seating-system.git
+
+Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
