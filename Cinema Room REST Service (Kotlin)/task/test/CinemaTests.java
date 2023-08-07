@@ -18,14 +18,6 @@ public class CinemaTests extends SpringTest {
     private static final String OUT_OF_BOUNDS_ERROR_MESSAGE = "The number of a row or a column is out of bounds!";
 
     private static final Gson gson = new Gson();
-    @DynamicTest
-    DynamicTesting[] dynamicTests = new DynamicTesting[]{
-        this::testEndpoint,
-            this::testEndpointAvailableSeats,
-            this::testPurchaseTicket,
-            this::testErrorMessageThatTicketHasBeenPurchased,
-            this::testErrorMessageThatNumbersOutOfBounds
-    };
 
     public CinemaTests() {
         super(ApplicationKt.class);
@@ -191,4 +183,13 @@ public class CinemaTests extends SpringTest {
 
         return CheckResult.correct();
     }
+
+    @DynamicTest
+    DynamicTesting[] dynamicTests = new DynamicTesting[]{
+            this::testEndpoint,
+            this::testEndpointAvailableSeats,
+            this::testPurchaseTicket,
+            this::testErrorMessageThatTicketHasBeenPurchased,
+            this::testErrorMessageThatNumbersOutOfBounds
+    };
 }

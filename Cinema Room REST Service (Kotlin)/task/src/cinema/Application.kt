@@ -1,5 +1,6 @@
 package cinema
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -12,9 +13,15 @@ fun main(args: Array<String>) {
 }
 
 data class Seat(
-    @JsonProperty("row") val row: Int,
-    @JsonProperty("column") val column: Int
+    val row: Int,
+    val column: Int,
+    @JsonIgnore var purchased: Boolean = false, // Added this field
+    val price: Int = if (row <= 4) 10 else 8
 )
+
+data class SeatResponse(val row: Int, val column: Int, val price: Int)
+
+data class SeatRequest(val row: Int, val column: Int)
 
 data class TheatreLayout(
     @JsonProperty("total_rows") val numberOfRows: Int,

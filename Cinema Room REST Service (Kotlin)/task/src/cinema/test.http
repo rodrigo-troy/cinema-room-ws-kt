@@ -1,0 +1,18 @@
+//@no-log
+###
+GET http://localhost:28852/seats
+
+###
+POST http://localhost:28852/purchase
+Content-Type: application/json
+
+{
+  "row": 1,
+  "column": 1
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}

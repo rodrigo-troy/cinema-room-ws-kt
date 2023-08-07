@@ -3,14 +3,14 @@ hyperskill_project:
   ide_files: https://cogniterra.org/media/attachments/lesson/26637/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: "Sat, 05 Aug 2023 22:42:46 UTC"
+update_date: "Mon, 07 Aug 2023 00:44:55 UTC"
 stages:
 - id: 1331
   step: 20457
   is_completed: true
 - id: 1332
   step: 20458
-  is_completed: false
+  is_completed: true
 - id: 1333
   step: 20459
   is_completed: false
@@ -247,6 +247,8 @@ topics:
     theory_id: 6491
   - title: Interfaces
     theory_id: 9640
+  - title: Design principles
+    theory_id: 8956
   - title: YAML
     theory_id: 12722
   - title: Inheritance
@@ -263,8 +265,6 @@ topics:
     theory_id: 19751
   - title: JSON
     theory_id: 6854
-  - title: Design principles
-    theory_id: 8956
   - title: Single Responsibility Principle
     theory_id: 8963
   - title: Object declarations

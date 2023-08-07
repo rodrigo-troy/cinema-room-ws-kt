@@ -53,21 +53,6 @@ files:
         }
     }
   learner_created: false
-- name: src/cinema/Application.kt
-  visible: true
-  text: |
-    package cinema
-
-    import org.springframework.boot.autoconfigure.SpringBootApplication
-    import org.springframework.boot.runApplication
-
-    @SpringBootApplication
-    class Application
-
-    fun main(args: Array<String>) {
-        runApplication<Application>(*args)
-    }
-  learner_created: false
 - name: test/CinemaTests.java
   visible: false
   text: |-
@@ -240,6 +225,21 @@ files:
         };
     }
   learner_created: false
+- name: src/cinema/Application.kt
+  visible: true
+  text: |
+    package cinema
+
+    import org.springframework.boot.autoconfigure.SpringBootApplication
+    import org.springframework.boot.runApplication
+
+    @SpringBootApplication
+    class Application
+
+    fun main(args: Array<String>) {
+        runApplication<Application>(*args)
+    }
+  learner_created: false
 - name: src/cinema/TheatreController.kt
   visible: true
   text: |
@@ -274,6 +274,12 @@ files:
         }
     }
   learner_created: true
+- name: src/cinema/test.http
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/20458#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Mon, 07 Aug 2023 01:48:46 UTC"
 record: -1
