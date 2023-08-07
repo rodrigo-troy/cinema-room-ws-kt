@@ -32,19 +32,18 @@ class TheatreController {
     }
 
     @PostMapping("/purchase")
-    fun purchaseSeat(@RequestBody request: SeatRequest): ResponseEntity<Any> {
+    fun purchaseSeat(@RequestBody request: SeatRequest): ResponseEntity<Seat> {
         val seat = seats.find { it.row == request.row && it.column == request.column }
 
         return when {
             seat == null || request.row > totalRows || request.column > totalColumns ->
-                ResponseEntity.badRequest().body(mapOf("error" to "The number of a row or a column is out of bounds!"))
+                throw SeatException("The number of a row or a column is out of bounds!")
 
-            seat.purchased ->
-                ResponseEntity.badRequest().body(mapOf("error" to "The ticket has been already purchased!"))
+            seat.purchased -> throw SeatException("The ticket has been already purchased!")
 
             else -> {
                 seat.purchased = true
-                ResponseEntity.ok(SeatResponse(seat.row, seat.column, seat.price))
+                ResponseEntity.ok(seat)
             }
         }
     }

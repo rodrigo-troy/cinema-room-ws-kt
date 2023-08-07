@@ -277,9 +277,12 @@ files:
 - name: src/cinema/test.http
   visible: true
   learner_created: true
+- name: src/cinema/SeatExceptionHandler.kt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/20458#comment
 status: Solved
 feedback:
   message: Congratulations!
-  time: "Mon, 07 Aug 2023 01:48:46 UTC"
+  time: "Mon, 07 Aug 2023 02:10:26 UTC"
 record: -1

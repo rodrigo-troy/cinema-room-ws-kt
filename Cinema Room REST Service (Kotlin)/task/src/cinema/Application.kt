@@ -19,8 +19,6 @@ data class Seat(
     val price: Int = if (row <= 4) 10 else 8
 )
 
-data class SeatResponse(val row: Int, val column: Int, val price: Int)
-
 data class SeatRequest(val row: Int, val column: Int)
 
 data class TheatreLayout(
@@ -28,3 +26,7 @@ data class TheatreLayout(
     @JsonProperty("total_columns") val numberOfColumns: Int,
     @JsonProperty("available_seats") val availableSeats: List<Seat>
 )
+
+data class ErrorResponse(val error: String)
+
+class SeatException(message: String) : RuntimeException(message)
