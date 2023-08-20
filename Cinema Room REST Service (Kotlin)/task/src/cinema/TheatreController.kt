@@ -1,5 +1,6 @@
 package cinema
 
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,36 +16,23 @@ $ Project: Cinema Room REST Service (Kotlin)
  */
 
 @RestController
-class TheatreController {
-    private val totalRows = 9
-    private val totalColumns = 9
-    private var seats: MutableList<Seat> = List(totalRows) { row ->
-        List(totalColumns) { col ->
-            Seat(row + 1, col + 1)
-        }
-    }.flatten().toMutableList()
-
+class TheatreController(private val seatService: SeatService) {
 
     @GetMapping("/seats")
-    fun getSeats(): TheatreLayout {
-        val availableSeats = seats.filterNot { it.purchased }
-        return TheatreLayout(totalRows, totalColumns, availableSeats)
-    }
+    fun getSeats(): TheatreLayout = seatService.getSeats()
 
     @PostMapping("/purchase")
-    fun purchaseSeat(@RequestBody request: SeatRequest): ResponseEntity<Seat> {
-        val seat = seats.find { it.row == request.row && it.column == request.column }
+    fun purchaseSeat(@RequestBody request: SeatRequest): ResponseEntity<PurchaseResponse> =
+        ResponseEntity.ok(seatService.purchaseSeat(request))
 
-        return when {
-            seat == null || request.row > totalRows || request.column > totalColumns ->
-                throw SeatException("The number of a row or a column is out of bounds!")
+    @PostMapping("/return")
+    fun returnTicket(@RequestBody request: ReturnRequest): ResponseEntity<Any> {
+        val returnedTicket = seatService.returnTicket(request)
 
-            seat.purchased -> throw SeatException("The ticket has been already purchased!")
-
-            else -> {
-                seat.purchased = true
-                ResponseEntity.ok(seat)
-            }
+        return if (returnedTicket != null) {
+            ResponseEntity.ok(returnedTicket)
+        } else {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse("Wrong token!"))
         }
     }
 }

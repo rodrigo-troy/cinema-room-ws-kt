@@ -1,12 +1,5 @@
 type: edu
 files:
-- name: src/resources/application.properties
-  visible: true
-  text: |-
-    server.port=28852
-    management.endpoints.web.exposure.include=*
-    management.endpoint.shutdown.enabled=true
-  learner_created: false
 - name: build.gradle
   visible: true
   text: |
@@ -545,9 +538,22 @@ files:
         }
     }
   learner_created: true
+- name: src/resources/application.properties
+  visible: true
+  text: |-
+    server.port=28852
+    management.endpoints.web.exposure.include=*
+    management.endpoint.shutdown.enabled=true
+  learner_created: false
+- name: src/cinema/SeatServiceImpl.kt
+  visible: true
+  learner_created: true
+- name: src/cinema/SeatService.kt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/20459#comment
-status: Failed
+status: Solved
 feedback:
-  message: Execution failed
-  time: "Mon, 07 Aug 2023 02:13:38 UTC"
+  message: Congratulations!
+  time: "Sun, 20 Aug 2023 17:53:07 UTC"
 record: -1

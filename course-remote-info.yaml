@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://cogniterra.org/media/attachments/lesson/26637/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: "Mon, 07 Aug 2023 00:44:55 UTC"
+update_date: "Sun, 20 Aug 2023 17:13:38 UTC"
 stages:
 - id: 1331
   step: 20457
@@ -13,7 +13,7 @@ stages:
   is_completed: true
 - id: 1333
   step: 20459
-  is_completed: false
+  is_completed: true
 - id: 1334
   step: 20460
   is_completed: false
@@ -77,8 +77,6 @@ topics:
     theory_id: 7834
   - title: Postman
     theory_id: 8512
-  - title: Getting data from REST
-    theory_id: 13287
   - title: Computer programming
     theory_id: 8739
   - title: Paradigms
@@ -271,6 +269,8 @@ topics:
     theory_id: 10698
   - title: Companion object
     theory_id: 10707
+  - title: Getting data from REST
+    theory_id: 13287
   - title: What is an exception
     theory_id: 7243
   - title: Hierarchy of exceptions
@@ -286,18 +286,18 @@ topics:
   - title: Singleton
     theory_id: 16469
   1:
-  - title: Posting and deleting data via REST
-    theory_id: 13292
   - title: Exception handling
     theory_id: 8780
-  - title: Handling requests with bodies
-    theory_id: 13334
   - title: Advanced exception handling in Spring Boot
     theory_id: 19855
   - title: Secondary constructor
     theory_id: 10746
   - title: Inheritance and constructors
     theory_id: 15614
+  - title: Posting and deleting data via REST
+    theory_id: 13292
+  - title: Handling requests with bodies
+    theory_id: 13334
   - title: The try-catch statement
     theory_id: 10622
   - title: The try-catch-finally statement

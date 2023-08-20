@@ -45,17 +45,6 @@ public class CinemaTests extends SpringTest {
                         200);
         return CheckResult.correct();
     }
-    @DynamicTest
-    DynamicTesting[] dynamicTests = new DynamicTesting[]{
-            this::testEndpoint,
-            this::testEndpointAvailableSeats,
-            this::testPurchaseTicket,
-            this::testErrorMessageThatTicketHasBeenPurchased,
-            this::testErrorMessageThatNumbersOutOfBounds,
-            this::testReturnTicket,
-            this::testTokenInvalidation,
-            this::testReturnedTicketAvailability
-    };
 
     CheckResult testEndpointAvailableSeats() {
         HttpResponse response = get("/seats").send();
@@ -448,4 +437,16 @@ public class CinemaTests extends SpringTest {
 
         return CheckResult.correct();
     }
+
+    @DynamicTest
+    DynamicTesting[] dynamicTests = new DynamicTesting[]{
+            this::testEndpoint,
+            this::testEndpointAvailableSeats,
+            this::testPurchaseTicket,
+            this::testErrorMessageThatTicketHasBeenPurchased,
+            this::testErrorMessageThatNumbersOutOfBounds,
+            this::testReturnTicket,
+            this::testTokenInvalidation,
+            this::testReturnedTicketAvailability
+    };
 }
