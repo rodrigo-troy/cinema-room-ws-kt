@@ -540,6 +540,155 @@ files:
         };
     }
   learner_created: false
+- name: src/cinema/SeatService.kt
+  visible: true
+  text: |
+    package cinema
+
+    interface SeatService {
+        fun getSeats(): TheatreLayout
+        fun purchaseSeat(request: SeatRequest): PurchaseResponse
+        fun returnTicket(request: ReturnRequest): ReturnedTicket?
+    }
+  learner_created: true
+- name: src/cinema/SeatServiceImpl.kt
+  visible: true
+  text: |
+    package cinema
+
+    import org.springframework.stereotype.Service
+    import java.util.*
+
+    @Service
+    class SeatServiceImpl(private val pricingStrategy: SeatPricingStrategy) : SeatService {
+        private val totalRows = 9
+        private val totalColumns = 9
+        private var seats: MutableList<Seat> = generateSeats()
+
+        private fun generateSeats() = List(totalRows) { row ->
+            List(totalColumns) { col ->
+                Seat.create(row + 1, col + 1, pricingStrategy)
+            }
+        }.flatten().toMutableList()
+
+        override fun getSeats(): TheatreLayout {
+            val availableSeats = seats.filterNot { it.purchased }
+            return TheatreLayout(totalRows, totalColumns, availableSeats)
+        }
+
+        override fun purchaseSeat(request: SeatRequest): PurchaseResponse {
+            val seat = seats.find { it.row == request.row && it.column == request.column }
+                ?: throw SeatException("The number of a row or a column is out of bounds!")
+            if (seat.purchased) throw SeatException("The ticket has been already purchased!")
+
+            seat.purchased = true
+            seat.token = UUID.randomUUID().toString() // Generate the token
+            return PurchaseResponse(seat.token!!, Ticket(seat.row, seat.column, seat.price))
+        }
+
+        override fun returnTicket(request: ReturnRequest): ReturnedTicket? {
+            val seat = seats.find { it.token == request.token } ?: return null
+            seat.purchased = false
+            seat.token = null
+            return ReturnedTicket(Ticket(seat.row, seat.column, seat.price))
+        }
+    }
+  learner_created: true
+- name: src/cinema/SeatExceptionHandler.kt
+  visible: true
+  text: |+
+    package cinema
+
+    import org.springframework.http.HttpStatus
+    import org.springframework.http.ResponseEntity
+    import org.springframework.web.bind.annotation.ExceptionHandler
+    import org.springframework.web.bind.annotation.RestControllerAdvice
+
+    /**
+     * Created with IntelliJ IDEA.
+    $ Project: Cinema Room REST Service (Kotlin)
+     * User: rodrigotroy
+     * Date: 06-08-23
+     * Time: 21:55
+     */
+    @RestControllerAdvice
+    class GlobalExceptionHandler {
+
+        @ExceptionHandler(SeatException::class)
+        fun handleSeatException(ex: SeatException): ResponseEntity<ErrorResponse> {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse(ex.message ?: "Unknown error"))
+        }
+    }
+
+  learner_created: true
+- name: src/cinema/test.http
+  visible: true
+  text: |
+    //@no-log
+    ###
+    GET http://localhost:28852/seats
+
+    ###
+    POST http://localhost:28852/purchase
+    Content-Type: application/json
+
+    {
+      "row": 1,
+      "column": 1
+    }
+
+    > {%
+        client.test("Request executed successfully", function () {
+            client.assert(response.status === 200, "Response status is not 200");
+        });
+    %}
+  learner_created: true
+- name: src/cinema/TheatreController.kt
+  visible: true
+  text: |
+    package cinema
+
+    import org.springframework.http.HttpStatus
+    import org.springframework.http.ResponseEntity
+    import org.springframework.web.bind.annotation.GetMapping
+    import org.springframework.web.bind.annotation.PostMapping
+    import org.springframework.web.bind.annotation.RequestBody
+    import org.springframework.web.bind.annotation.RestController
+
+    /**
+     * Created with IntelliJ IDEA.
+    $ Project: Cinema Room REST Service (Kotlin)
+     * User: rodrigotroy
+     * Date: 05-08-23
+     * Time: 18:36
+     */
+
+    @RestController
+    class TheatreController(private val seatService: SeatService) {
+
+        @GetMapping("/seats")
+        fun getSeats(): TheatreLayout = seatService.getSeats()
+
+        @PostMapping("/purchase")
+        fun purchaseSeat(@RequestBody request: SeatRequest): ResponseEntity<PurchaseResponse> =
+            ResponseEntity.ok(seatService.purchaseSeat(request))
+
+        @PostMapping("/return")
+        fun returnTicket(@RequestBody request: ReturnRequest): ResponseEntity<Any> {
+            val returnedTicket = seatService.returnTicket(request)
+
+            return if (returnedTicket != null) {
+                ResponseEntity.ok(returnedTicket)
+            } else {
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse("Wrong token!"))
+            }
+        }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/20460#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">Hyperskill</a>
+    to continue learning.
+  time: "Sun, 20 Aug 2023 18:34:01 UTC"
 record: -1
